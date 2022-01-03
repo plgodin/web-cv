@@ -21,7 +21,11 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+
+    // Load bio by default
+    location.hash = location.hash === "" ? "bio" : location.hash;
   </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext"
     rel="stylesheet"
@@ -30,6 +34,21 @@
   <style>
     html {
       font-family: Lato;
+      /* font-size: 2rem; */
+    }
+    body {
+      margin: 0;
+    }
+    @media (max-width: 1000px) {
+      html {
+        font-size: 1rem;
+      }
+    }
+    .area {
+      padding: 24px;
+    }
+    #banner {
+      background-color: #eee;
     }
     section {
       display: none;
@@ -42,55 +61,96 @@
     nav {
       display: flex;
       gap: 10px;
+      font-size: 1rem;
     }
+    nav > a {
+      background-color: #ddd;
+      padding: 8px;
+      margin-right: 12px;
+      font-variant: small-caps;
+      color: inherit;
+      text-decoration: inherit;
+    }
+    hr {
+      margin: 20px 0;
+    }
+    /* a:visited {
+      color: blue;
+    } */
   </style>
 
   <title>Pierre-Luc Godin</title>
 </head>
 <body>
-  <h1>Pierre-Luc Godin</h1>
-
-  <nav>
-    <a href="#bio">Bio</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <section id="bio">
-    <h2>Bio</h2>
-    <h3>Hilo Énergie, Aug. 2020 - present</h3>
-    <em>Senior Full-stack Dev</em>
-    <ul>
-      <li>Frontend: Angular 11, SASS, MSAL</li>
-      <li>Backend: .NET, Docker</li>
-      <li>Infrastructure: Azure, Terraform, CI/CD pipelines</li>
-    </ul>
-    <h3>CAE, Aug. 2016 - Aug. 2020</h3>
-    <p><em>Full-stack Dev</em> for the last few months</p>
-    <p>
-      Many different things before that, including some
-      <a href="https://youtu.be/HGluuhyZDVA?t=13">cool stuff</a>
-    </p>
-    <h3>B. Sc. in Electrical Engineering</h3>
-    <p>Polytechnique Montréal, 3.93/4.0</p>
-  </section>
-
-  <section id="projects">
-    <h2>QR Transfer</h2>
+  <div class="area" id="banner">
+    <h1>Pierre-Luc Godin</h1>
     <nav>
-      <a href="bit.ly/qr-transfer">Web app</a>
-      <a href="github.com/plgodin/qr-transfer">Frontend repo</a>
-      <a href="github.com/plgodin/qr-transfer-node">Backend repo</a>
+      <a href="#bio">Bio</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
     </nav>
-    <p>
-      A simple web app for sending text strings between devices,
-      <em>even if neither device has a camera</em>
-    </p>
-  </section>
+  </div>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <a href="www.linkedin.com/in/plgodin">LinkedIn</a>
-    <address>Email: Domain name at Gmail</address>
-  </section>
+  <div class="area">
+    <section id="bio">
+      <h2>Bio</h2>
+      <h3>Hilo Énergie, Aug. 2020 - present</h3>
+      <em>Senior Full-stack Dev,</em>
+      <a href="https://www.hiloenergie.com/en-ca/business/">B2B service</a> (75%
+      infra + backend)
+      <ul>
+        <li>Infrastructure: Azure, Terraform, Azure DevOps CI/CD pipelines</li>
+        <li>Backend: .NET, Docker</li>
+        <li>Frontend: Angular 11, SASS, MSAL</li>
+      </ul>
+      <h3>CAE, Aug. 2016 - Aug. 2020</h3>
+      <p><em>Full-stack Dev</em> for the last few months</p>
+      <p>
+        Graduated the Ken Patrick
+        <a
+          href="https://www.cae.com/careers/job-categories/students-and-new-graduates#carouselTestimonial"
+          >Leadership Program</a
+        >
+      </p>
+      <p>
+        Significant achievement: developed the prototype for the
+        <a
+          href="https://www.cae.com/defence-security/what-we-do/training-systems/cae-sprint/"
+          >CAESprint</a
+        >
+        VR flight trainer, acting as student pilot for most
+        <a href="https://youtu.be/2kAbpqu5poY">promotional videos</a> and the
+        <a href="https://youtu.be/HGluuhyZDVA?t=15">official launch</a> at the
+        I/ITSEC 2019 international conference.
+      </p>
+      <h3>Publications</h3>
+      <a href="https://www.nature.com/articles/s41467-018-07141-w"
+        >Customizing supercontinuum generation via on-chip adaptive temporal
+        pulse-splitting</a
+      >, Nature Communications, 2018.
+      <!-- <p>
+        Developed the pulse-splitter's electrical controller used in the
+        experimental setup.
+      </p> -->
+      <h3>B. Sc. in Electrical Engineering</h3>
+      <p>Polytechnique Montréal, 3.93/4.0</p>
+    </section>
+    <section id="projects">
+      <h2>QR Transfer</h2>
+      <nav>
+        <a href="https://bit.ly/qr-transfer">Web app</a>
+        <a href="https://github.com/plgodin/qr-transfer">Frontend repo</a>
+        <a href="https://github.com/plgodin/qr-transfer-node">Backend repo</a>
+      </nav>
+      <p>
+        A simple web app for sending text strings between devices,
+        <em>even if neither device has a camera</em>
+      </p>
+    </section>
+    <section id="contact">
+      <h2>Contact</h2>
+      <a href="www.linkedin.com/in/plgodin">LinkedIn</a>
+      <address>Email: Domain name at Gmail</address>
+    </section>
+  </div>
 </body>
