@@ -1,13 +1,9 @@
 <head>
   <script type="module">
-    // Import the functions you need from the SDKs you need
+    // I'm watching you watching me
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
 
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
       apiKey: "AIzaSyBGebgqNO2LWQUDo6ALZs-fF-Hce_8PBiQ",
       authDomain: "plgodin-6f132.firebaseapp.com",
@@ -18,11 +14,9 @@
       measurementId: "G-4086YDE9PQ",
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
 
-    // Load bio by default
     location.hash = location.hash === "" ? "bio" : location.hash;
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,28 +26,27 @@
     type="text/css"
   />
   <style>
-    html {
-      font-family: Lato;
-      /* font-size: 2rem; */
-    }
+    /* Global */
     body {
+      font-family: Lato;
       margin: 0;
     }
-    @media (max-width: 1000px) {
-      html {
-        font-size: 1rem;
-      }
-    }
+
+    /* Layout */
     .area {
-      padding: 24px;
+      padding: 0 24px;
+    }
+    #banner-container {
+      background-color: #eee;
+      position: absolute;
+      width: 100vw;
     }
     #banner {
-      background-color: #eee;
+      padding: 24px;
     }
     section {
       display: none;
-      position: relative;
-      top: 0;
+      padding-top: 165px;
     }
     section:target {
       display: block;
@@ -61,8 +54,9 @@
     nav {
       display: flex;
       gap: 10px;
-      font-size: 1rem;
     }
+
+    /* Styling */
     nav > a {
       background-color: #ddd;
       padding: 8px;
@@ -72,23 +66,25 @@
       text-decoration: inherit;
     }
     hr {
-      margin: 20px 0;
+      margin: 32px 25vw;
     }
-    /* a:visited {
-      color: blue;
-    } */
+    .underline {
+      text-decoration: underline;
+    }
   </style>
 
   <title>Pierre-Luc Godin</title>
 </head>
 <body>
-  <div class="area" id="banner">
-    <h1>Pierre-Luc Godin</h1>
-    <nav>
-      <a href="#bio">Bio</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <div id="banner-container">
+    <div id="banner">
+      <h1>Pierre-Luc Godin</h1>
+      <nav>
+        <a href="#bio">Bio</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </div>
 
   <div class="area">
@@ -99,39 +95,45 @@
       <a href="https://www.hiloenergie.com/en-ca/business/">B2B service</a> (75%
       infra + backend)
       <ul>
-        <li>Infrastructure: Azure, Terraform, Azure DevOps CI/CD pipelines</li>
+        <li>Infrastructure: Azure Cloud, Terraform, Azure DevOps CI/CD pipelines</li>
         <li>Backend: .NET, Docker</li>
         <li>Frontend: Angular 11, SASS, MSAL</li>
       </ul>
       <h3>CAE, Aug. 2016 - Aug. 2020</h3>
-      <p><em>Full-stack Dev</em> for the last few months</p>
+      <p><em>Multiple positions</em></p>
       <p>
-        Graduated the Ken Patrick
-        <a
-          href="https://www.cae.com/careers/job-categories/students-and-new-graduates#carouselTestimonial"
-          >Leadership Program</a
-        >
       </p>
       <p>
-        Significant achievement: developed the prototype for the
-        <a
-          href="https://www.cae.com/defence-security/what-we-do/training-systems/cae-sprint/"
-          >CAESprint</a
-        >
-        VR flight trainer, acting as student pilot for most
-        <a href="https://youtu.be/2kAbpqu5poY">promotional videos</a> and the
-        <a href="https://youtu.be/HGluuhyZDVA?t=15">official launch</a> at the
-        I/ITSEC 2019 international conference.
+        Significant achievements:
+        <ul>
+          <li>
+            Developed the prototype for the
+            <a
+              href="https://www.cae.com/defence-security/what-we-do/training-systems/cae-sprint/"
+              >CAESprint</a
+            >
+            VR flight trainer, acting as student pilot for most
+            <a href="https://youtu.be/2kAbpqu5poY">promotional videos</a> and the
+            <a href="https://youtu.be/HGluuhyZDVA?t=15">official launch</a> at the
+            I/ITSEC 2019 international conference
+          </li>
+          <li>
+            Graduated from the Ken Patrick
+            <a
+              href="https://www.cae.com/careers/job-categories/students-and-new-graduates#carouselTestimonial"
+              >Leadership Program</a
+            >
+          </li>
+          <li>
+            Coordinated the transition to activity-based workspaces for the Healthcare division
+          </li>
+        </ul>
       </p>
-      <h3>Publications</h3>
+      <h3>Publication</h3>
       <a href="https://www.nature.com/articles/s41467-018-07141-w"
         >Customizing supercontinuum generation via on-chip adaptive temporal
         pulse-splitting</a
-      >, Nature Communications, 2018.
-      <!-- <p>
-        Developed the pulse-splitter's electrical controller used in the
-        experimental setup.
-      </p> -->
+      > (5th author), Nature Communications, 2018.
       <h3>B. Sc. in Electrical Engineering</h3>
       <p>Polytechnique Montréal, 3.93/4.0</p>
     </section>
@@ -143,14 +145,15 @@
         <a href="https://github.com/plgodin/qr-transfer-node">Backend repo</a>
       </nav>
       <p>
-        A simple web app for sending text strings between devices,
-        <em>even if neither device has a camera</em>
+        A simple web app for sending text strings between devices using QR codes,
+        <em>even if neither device has a camera</em>.
       </p>
     </section>
     <section id="contact">
       <h2>Contact</h2>
-      <a href="www.linkedin.com/in/plgodin">LinkedIn</a>
-      <address>Email: Domain name at Gmail</address>
+      <a href="https://www.linkedin.com/in/plgodin">LinkedIn</a>
+      <address>E-mail: This domain name at Gmail</address>
     </section>
+    <hr />
   </div>
 </body>
