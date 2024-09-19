@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import TokenWithTooltip from './components/TokenWithTooltip';
+import useApiConfig from './hooks/useApiConfig';
 
 function App() {
+  const { apiKey, apiBaseUrl, saveApiKey, saveApiBaseUrl } = useApiConfig();
+  
   const [userMessage, setUserMessage] = useState('');
   const [llmResponse, setLlmResponse] = useState<Array<{
     token: string;
@@ -9,38 +13,8 @@ function App() {
     top_logprobs: Array<{ token: string; logprob: number }>;
   }>>([]);
   const [input, setInput] = useState('');
-  const [apiKey, setApiKey] = useState('');
-  const [apiBaseUrl, setApiBaseUrl] = useState('https://api.openai.com');
   const [perplexity, setPerplexity] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const savedApiKey = localStorage.getItem('openai_api_key');
-    if (savedApiKey) {
-      setApiKey(savedApiKey);
-    }
-    const savedApiBaseUrl = localStorage.getItem('openai_api_base_url');
-    if (savedApiBaseUrl) {
-      setApiBaseUrl(savedApiBaseUrl);
-    }
-  }, []);
-
-  const saveApiKey = () => {
-    const newApiKey = prompt('Enter your OpenAI API key:');
-    if (newApiKey) {
-      setApiKey(newApiKey);
-      localStorage.setItem('openai_api_key', newApiKey);
-    }
-  };
-
-  const saveApiBaseUrl = () => {
-    const newApiBaseUrl = prompt('Enter your OpenAI API base URL (e.g. https://api.openai.com):', apiBaseUrl);
-    if (newApiBaseUrl) {
-      const sanitizedUrl = newApiBaseUrl.endsWith('/') ? newApiBaseUrl.slice(0, -1) : newApiBaseUrl;
-      setApiBaseUrl(sanitizedUrl);
-      localStorage.setItem('openai_api_base_url', sanitizedUrl);
-    }
-  };
 
   const calculatePerplexity = (logprobs: number[]): number => {
     const avgNegativeLogProb = logprobs.reduce((sum, logprob) => sum - logprob, 0) / logprobs.length;
@@ -96,41 +70,7 @@ function App() {
     }
   };
 
-  const getColor = (logprob: number, scaleFactor: number = 1) => {
-    // Clamp logprob between -scaleFactor and 0
-    const clampedLogprob = Math.max(-scaleFactor, Math.min(0, logprob));
-    
-    // Normalize the value to a 0-1 range
-    const normalizedValue = (clampedLogprob + scaleFactor) / scaleFactor;
-    
-    // Calculate RGB values for a yellow to blue gradient (deuteranopia-friendly)
-    const blue = Math.round(255 * normalizedValue);
-    const red = Math.round(255 * (1 - normalizedValue));
-    const green = Math.round(255 * (1 - normalizedValue));
-    
-    return `rgb(${red}, ${green}, ${blue})`;
-  };
-
-  const TokenWithTooltip = ({ item }: { item: { token: string; logprob: number; top_logprobs: Array<{ token: string; logprob: number }> } }) => (
-    <span
-      className="relative group"
-      style={{ color: getColor(item.logprob), fontWeight: 'bold' }}
-    >
-      {item.token}
-      <div className="absolute z-10 invisible group-hover:visible bg-white text-black p-2 rounded shadow-lg whitespace-nowrap border border-gray-300">
-        Top 5 alternatives:
-        <ul>
-          {item.top_logprobs.map((alt, index) => (
-            <li key={index} style={{ color: getColor(alt.logprob, 10) }}>
-              {alt.token}: {alt.logprob.toFixed(4)}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </span>
-  );
-
-  return (
+   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-3xl p-4 bg-white shadow-md rounded-md">
         <div className="flex justify-between items-center mb-2">
