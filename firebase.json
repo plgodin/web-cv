@@ -8,7 +8,11 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "/",
+        "destination": "/cv.html"
+      },
+      {
+        "source": "/logprob",
         "destination": "/index.html"
       }
     ]
