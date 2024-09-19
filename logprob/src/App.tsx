@@ -10,6 +10,7 @@ function App() {
   }>>([]);
   const [input, setInput] = useState('');
   const [apiKey, setApiKey] = useState('');
+  const [apiBaseUrl, setApiBaseUrl] = useState('https://api.openai.com');
   const [perplexity, setPerplexity] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -18,6 +19,10 @@ function App() {
     if (savedApiKey) {
       setApiKey(savedApiKey);
     }
+    const savedApiBaseUrl = localStorage.getItem('openai_api_base_url');
+    if (savedApiBaseUrl) {
+      setApiBaseUrl(savedApiBaseUrl);
+    }
   }, []);
 
   const saveApiKey = () => {
@@ -25,6 +30,15 @@ function App() {
     if (newApiKey) {
       setApiKey(newApiKey);
       localStorage.setItem('openai_api_key', newApiKey);
+    }
+  };
+
+  const saveApiBaseUrl = () => {
+    const newApiBaseUrl = prompt('Enter your OpenAI API base URL (e.g. https://api.openai.com):', apiBaseUrl);
+    if (newApiBaseUrl) {
+      const sanitizedUrl = newApiBaseUrl.endsWith('/') ? newApiBaseUrl.slice(0, -1) : newApiBaseUrl;
+      setApiBaseUrl(sanitizedUrl);
+      localStorage.setItem('openai_api_base_url', sanitizedUrl);
     }
   };
 
@@ -38,7 +52,7 @@ function App() {
       setUserMessage(input);
       setIsLoading(true);
       try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        const response = await fetch(`${apiBaseUrl}/v1/chat/completions`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -73,7 +87,7 @@ function App() {
         setPerplexity(calculatedPerplexity);
       } catch (error) {
         console.error('Error fetching from OpenAI:', error);
-        setLlmResponse([{ token: 'Error fetching response.', logprob: -Infinity, top_logprobs: [] }]);
+        setLlmResponse([{ token: 'Error fetching response.', logprob: -0, top_logprobs: [] }]);
         setPerplexity(null);
       } finally {
         setIsLoading(false);
@@ -82,12 +96,12 @@ function App() {
     }
   };
 
-  const getColor = (logprob: number) => {
-    // Clamp logprob between -1 and 0
-    const clampedLogprob = Math.max(-1, Math.min(0, logprob));
+  const getColor = (logprob: number, scaleFactor: number = 1) => {
+    // Clamp logprob between -scaleFactor and 0
+    const clampedLogprob = Math.max(-scaleFactor, Math.min(0, logprob));
     
     // Normalize the value to a 0-1 range
-    const normalizedValue = 1 + clampedLogprob;
+    const normalizedValue = (clampedLogprob + scaleFactor) / scaleFactor;
     
     // Calculate RGB values for a yellow to blue gradient (deuteranopia-friendly)
     const blue = Math.round(255 * normalizedValue);
@@ -97,23 +111,6 @@ function App() {
     return `rgb(${red}, ${green}, ${blue})`;
   };
 
-  // New function to handle tooltip color scaling from 0 to -20
-  const getTooltipColor = (logprob: number) => {
-    // Clamp logprob between -20 and 0
-    const clampedLogprob = Math.max(-10, Math.min(0, logprob));
-    
-    // Normalize the value to a 0-1 range
-    const normalizedValue = (logprob + 10) / 10;
-    
-    // Calculate RGB values for a yellow to blue gradient (deuteranopia-friendly)
-    const blue = Math.round(255 * normalizedValue);
-    const red = Math.round(255 * (1 - normalizedValue));
-    const green = Math.round(255 * (1 - normalizedValue));
-    
-    return `rgb(${red}, ${green}, ${blue})`;
-  };
-
-  // Update the TokenWithTooltip component to use getTooltipColor for top_logprobs
   const TokenWithTooltip = ({ item }: { item: { token: string; logprob: number; top_logprobs: Array<{ token: string; logprob: number }> } }) => (
     <span
       className="relative group"
@@ -124,7 +121,7 @@ function App() {
         Top 5 alternatives:
         <ul>
           {item.top_logprobs.map((alt, index) => (
-            <li key={index} style={{ color: getTooltipColor(alt.logprob) }}>
+            <li key={index} style={{ color: getColor(alt.logprob, 10) }}>
               {alt.token}: {alt.logprob.toFixed(4)}
             </li>
           ))}
@@ -135,15 +132,25 @@ function App() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-3xl p-4 bg-white shadow-md rounded-md"> 
-        <div className="flex justify-end mb-2">
-          <button
-            onClick={saveApiKey}
-            className="p-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
-            title="Enter API Key"
-          >
-            🔑
-          </button>
+      <div className="w-full max-w-3xl p-4 bg-white shadow-md rounded-md">
+        <div className="flex justify-between items-center mb-2">
+          <h1 className="text-xl font-bold">Logprob Viewer</h1>
+          <div className="flex space-x-2">
+            <button
+              onClick={saveApiBaseUrl}
+              className="p-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+              title="Set API Base URL"
+            >
+              🖥️
+            </button>
+            <button
+              onClick={saveApiKey}
+              className="p-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300"
+              title="Enter API Key"
+            >
+              🔑
+            </button>
+          </div>
         </div>
         <div className="messages mb-4">
           <div className="bg-blue-100 p-2 mb-2 rounded">
