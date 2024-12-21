@@ -6,13 +6,18 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "redirects": [ ],
     "rewrites": [
       {
-        "source": "/",
+        "source": "/cv",
         "destination": "/cv.html"
       },
       {
-        "source": "/logprob",
+        "source": "/noel",
+        "destination": "/noel.html"
+      },
+      {
+        "source": "!/@(js|css)/**",
         "destination": "/index.html"
       }
     ]

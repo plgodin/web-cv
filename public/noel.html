@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La liste de Pi-Lu!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Open+Sans:wght@400;600&display=swap');
+        
+        body {
+            background-color: #fafafa;
+            color: #2c3e50;
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+CiAgPGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMSIgZmlsbD0iI2UwZTBlMCIvPgo8L3N2Zz4=');
+        }
+
+        h1 {
+            font-family: 'Mountains of Christmas', cursive;
+            color: #c0392b;
+            text-align: center;
+            font-size: 2.3em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .gift-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gift-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gift-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .gift-name {
+            color: #2c3e50;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .gift-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎄 La liste de Pi-Lu 🎄</h1>
+    
+    <div class="gift-container">
+        <a href="https://www.amazon.ca/gp/product/B06XPK6K99" class="gift-card">
+            <img src="https://m.media-amazon.com/images/I/71ThDFP1NUL._AC_SX679_.jpg" class="gift-image">
+            <h2 class="gift-name">Hostage Negotiator: Crime Wave</h2>
+            <p class="gift-description">Une expansion pour un jeu solo que j'ai!</p>
+        </a>
+
+        <a href="https://www.amazon.ca/Anker-PowerCore-Magnetic-Slim-B2C/dp/B099284SRR" class="gift-card">
+            <img src="https://m.media-amazon.com/images/I/61t70mVvMFL._AC_SL1500_.jpg" class="gift-image">
+            <h2 class="gift-name">Batterie sans-fil</h2>
+            <p class="gift-description">Pour quand j'ai besoin de charger mon cell et de l'utiliser en même temps.</p>
+        </a>
+
+        <div class="gift-card">
+            <img src="https://images.squarespace-cdn.com/content/v1/5b4544e485ede17941bc95fc/eb44566d-2e82-4b37-beed-63a5f3f19383/Terramar-thermasilk-glove.jpg" class="gift-image">
+            <h2 class="gift-name">Gants pas chauds</h2>
+            <p class="gift-description">J'ai des gants chauds d'hiver, mais j'ai pas de gants pas chauds pour quand il fait pas froid. (Photo pas indicative)</p>
+        </div>
+
+        <div class="gift-card">
+            <img src="https://www.thesonyshop.ca/cdn/shop/products/HTS2000_1_2400x2400.jpg?v=1677603427" class="gift-image">
+            <h2 class="gift-name">Barre de son</h2>
+            <p class="gift-description">Pas besoin d'être la meilleure, juste que ca remplisse mieux la pièce que les speakers de ma TV!</p>
+        </div>
+
+        <a href="https://nanoleaf.me/en-CA/products/essentials/bulbs/?category=A19-E26&standard=wifi&size=2" class="gift-card">
+            <img src="https://ca-cdn.nanoleaf.me/assets/img/products/shop/bulbs/a19-e26/wifi/2pk/01-a19-e27-bulbs-wifi-shop-2pk-desktop@2x.webp" class="gift-image">
+            <h2 class="gift-name">Ampoules Nanoleaf</h2>
+            <p class="gift-description">J'ai 2 ampoules ordinaires pouiches chez nous que je peux pas changer la couleur 😠</p>
+        </a>
+
+        <div class="gift-card">
+            <img src="https://media.gq-magazine.co.uk/photos/6513fc12401a20d55139ab8b/16:9/w_1280,c_limit/best-clothing-brands-for-men.jpg" class="gift-image">
+            <h2 class="gift-name">Du linge!</h2>
+            <p class="gift-description">Du linge c'est toujours une bonne idée, je suis pas bon pour en acheter.</p>
+        </div>
+
+        <div class="gift-card">
+            <div style="font-size: 100px; text-align: center;">🐈‍⬛</div>
+            <h2 class="gift-name">Un chat</h2>
+            <p class="gift-description">J'aime les chats!</p>
+        </div>
+
+    </div>
+</body>
+</html>
