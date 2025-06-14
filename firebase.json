@@ -1,12 +1,21 @@
 {
   "hosting": {
     "public": "public",
+    "predeploy": [
+      "cd logprob && npm install && npm run build"
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
-    "redirects": [ ],
+    "redirects": [
+      {
+        "source": "/",
+        "destination": "/cv",
+        "type": 301
+      }
+    ],
     "rewrites": [
       {
         "source": "/cv",
@@ -17,8 +26,8 @@
         "destination": "/noel.html"
       },
       {
-        "source": "!/@(js|css)/**",
-        "destination": "/index.html"
+        "source": "/logprob/**",
+        "destination": "/logprob/index.html"
       }
     ]
   }
