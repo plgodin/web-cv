@@ -68,3 +68,5 @@ node_modules/
 # Firebase
 .firebase
 public/logprob
+
+.DS_Store

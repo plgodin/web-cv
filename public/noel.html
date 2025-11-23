@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La liste de Pi-Lu!</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Open+Sans:wght@400;600&display=swap');
-        
+
         body {
             background-color: #fafafa;
             color: #2c3e50;
             font-family: 'Open Sans', sans-serif;
             margin: 0;
             padding: 20px;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+CiAgPGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMSIgZmlsbD0iI2UwZTBlMCIvPgo8L3N2Zz4=');
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCI+CiAgPGNpcmNsZSBjeD0iMjUiIGN5PSIyNSIgcj0iMSIgZmlsbD0iI2UwZTBlMCIvPgo8L2N2Zz4=');
         }
 
         h1 {
@@ -21,26 +22,59 @@
             color: #c0392b;
             text-align: center;
             font-size: 2.3em;
-            margin-bottom: 40px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab-button {
+            background: white;
+            border: 2px solid #c0392b;
+            color: #c0392b;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            background: #c0392b;
+            color: white;
+        }
+
+        .tab-button:hover {
+            transform: scale(1.05);
         }
 
         .gift-container {
-            display: grid;
+            display: none;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
+        .gift-container.active {
+            display: grid;
+        }
+
         .gift-card {
             background: white;
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
             text-decoration: none;
             display: block;
+            position: relative;
         }
 
         .gift-card:hover {
@@ -49,8 +83,8 @@
 
         .gift-image {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
+            aspect-ratio: 1 / 1;
+            object-fit: contain;
             border-radius: 8px;
             margin-bottom: 15px;
         }
@@ -66,44 +100,83 @@
             color: #7f8c8d;
             line-height: 1.6;
         }
+
+        .price-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #27ae60;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
     </style>
 </head>
+
 <body>
-    <h1>🎄 La liste de Pi-Lu 🎄</h1>
-    
-    <div class="gift-container">
-        <a href="https://www.amazon.ca/gp/product/B06XPK6K99" class="gift-card">
-            <img src="https://m.media-amazon.com/images/I/71ThDFP1NUL._AC_SX679_.jpg" class="gift-image">
-            <h2 class="gift-name">Hostage Negotiator: Crime Wave</h2>
-            <p class="gift-description">Une expansion pour un jeu solo que j'ai!</p>
+    <h1>🎄 Listes de Noël 🎄</h1>
+
+    <div class="tabs">
+        <button class="tab-button active" onclick="openTab('pilu')">Pi-Lu</button>
+        <button class="tab-button" onclick="openTab('laurele')">Laurèle</button>
+    </div>
+
+    <div id="pilu" class="gift-container active">
+        <a href="https://www.amazon.ca/s?k=hermes+h24" class="gift-card">
+            <div class="price-tag">100$</div>
+            <img src="https://m.media-amazon.com/images/I/51Eh8riEBPL._AC_UL640_FMwebp_QL65_.jpg" class="gift-image"
+                alt="Hermes H24">
+            <h2 class="gift-name">Parfum Hermes H24</h2>
+            <p class="gift-description">Pour sentir bonne</p>
         </a>
 
-        <a href="https://www.amazon.ca/Anker-PowerCore-Magnetic-Slim-B2C/dp/B099284SRR" class="gift-card">
-            <img src="https://m.media-amazon.com/images/I/61t70mVvMFL._AC_SL1500_.jpg" class="gift-image">
-            <h2 class="gift-name">Batterie sans-fil</h2>
-            <p class="gift-description">Pour quand j'ai besoin de charger mon cell et de l'utiliser en même temps.</p>
+        <a href="https://www.cuckooamerica.ca/collections/rice-cookers-1/products/cr-0375f" class="gift-card">
+            <div class="price-tag">130$</div>
+            <img src="https://www.cuckooamerica.ca/cdn/shop/files/CR-0375FG.jpg?v=1756493616&width=1800"
+                class="gift-image" alt="Rice Cooker">
+            <h2 class="gift-name">Rice Cooker</h2>
+            <p class="gift-description">Un cuiseur à riz fancy! Idéalement à pression, petit, et sans autres fonctions
+                (pas un crockpot).</p>
+        </a>
+
+        <a href="https://www.amazon.ca/s?k=Woodwick+Candle" class="gift-card">
+            <div class="price-tag">30$</div>
+            <img src="https://m.media-amazon.com/images/I/71Ri6OzzHDL._AC_UL640_FMwebp_QL65_.jpg" class="gift-image"
+                alt="Woodwick Candle">
+            <h2 class="gift-name">Chandelle Woodwick</h2>
+            <p class="gift-description">Ça crépite!</p>
+        </a>
+
+        <a href="https://us.loopearplugs.com/products/experience-2-tomorrowland?variant=48114816778473"
+            class="gift-card">
+            <div class="price-tag">60$</div>
+            <img src="https://us.loopearplugs.com/cdn/shop/files/preview_images/4a4b7b00728e4166a48718b9b82ce42e.thumbnail.0000000000.jpg?v=1748272326"
+                class="gift-image" alt="Loop Earplugs">
+            <h2 class="gift-name">Loop Earplugs</h2>
+            <p class="gift-description">Pour réduire le bruit mais garder la qualité du son dans les festivaux.</p>
+        </a>
+
+        <a href="https://www.amazon.ca/Ntag215-Enabled-Phones-Compatible-Amiibo/dp/B08FTM1138/" class="gift-card">
+            <div class="price-tag">15$</div>
+            <img src="https://m.media-amazon.com/images/I/51hra5-83UL._AC_SX679_.jpg" class="gift-image" alt="NFC Tags">
+            <h2 class="gift-name">Tags RFID Programmables</h2>
+            <p class="gift-description">Des tags programmables pour pouvoir faire des projets de geek.</p>
+        </a>
+
+        <a href="https://www.amazon.ca/s?k=nespresso+vertuo+capsule+holder" class="gift-card">
+            <div class="price-tag">~30$</div>
+            <img src="https://m.media-amazon.com/images/I/71FrGPV1LqL._AC_SX679_.jpg" class="gift-image"
+                alt="Nespresso Organizer">
+            <h2 class="gift-name">Rangement Capsules Nespresso</h2>
+            <p class="gift-description">Pour capsules Vertuo. N'importe quel modèle ou marque (tiroir, carrousel, etc.)
+            </p>
         </a>
 
         <div class="gift-card">
-            <img src="https://images.squarespace-cdn.com/content/v1/5b4544e485ede17941bc95fc/eb44566d-2e82-4b37-beed-63a5f3f19383/Terramar-thermasilk-glove.jpg" class="gift-image">
-            <h2 class="gift-name">Gants pas chauds</h2>
-            <p class="gift-description">J'ai des gants chauds d'hiver, mais j'ai pas de gants pas chauds pour quand il fait pas froid. (Photo pas indicative)</p>
-        </div>
-
-        <div class="gift-card">
-            <img src="https://www.thesonyshop.ca/cdn/shop/products/HTS2000_1_2400x2400.jpg?v=1677603427" class="gift-image">
-            <h2 class="gift-name">Barre de son</h2>
-            <p class="gift-description">Pas besoin d'être la meilleure, juste que ca remplisse mieux la pièce que les speakers de ma TV!</p>
-        </div>
-
-        <a href="https://nanoleaf.me/en-CA/products/essentials/bulbs/?category=A19-E26&standard=wifi&size=2" class="gift-card">
-            <img src="https://ca-cdn.nanoleaf.me/assets/img/products/shop/bulbs/a19-e26/wifi/2pk/01-a19-e27-bulbs-wifi-shop-2pk-desktop@2x.webp" class="gift-image">
-            <h2 class="gift-name">Ampoules Nanoleaf</h2>
-            <p class="gift-description">J'ai 2 ampoules ordinaires pouiches chez nous que je peux pas changer la couleur 😠</p>
-        </a>
-
-        <div class="gift-card">
-            <img src="https://media.gq-magazine.co.uk/photos/6513fc12401a20d55139ab8b/16:9/w_1280,c_limit/best-clothing-brands-for-men.jpg" class="gift-image">
+            <img src="https://media.gq-magazine.co.uk/photos/6513fc12401a20d55139ab8b/16:9/w_1280,c_limit/best-clothing-brands-for-men.jpg"
+                class="gift-image">
             <h2 class="gift-name">Du linge!</h2>
             <p class="gift-description">Du linge c'est toujours une bonne idée, je suis pas bon pour en acheter.</p>
         </div>
@@ -113,7 +186,77 @@
             <h2 class="gift-name">Un chat</h2>
             <p class="gift-description">J'aime les chats!</p>
         </div>
-
     </div>
+
+    <div id="laurele" class="gift-container">
+        <a href="https://www.amazon.ca/rechargeable-accessoires-chargement-%C3%A9lectrique-multifonction/dp/B0BSKVBF1F/"
+            class="gift-card">
+            <div class="price-tag">$30.98</div>
+            <img src="https://dyr69yan0mo6n.cloudfront.net/prod/3722774/2025/11/1763045680713.jpg" class="gift-image"
+                alt="Rotary Tool">
+            <h2 class="gift-name">HARDELL Mini Cordless Rotary Tool</h2>
+            <p class="gift-description">Un jouet pour les crafts :)</p>
+        </a>
+
+        <a href="https://www.linenchest.com/en_ca/pop-2-0-5-piece-starter-set-by-oxo" class="gift-card">
+            <div class="price-tag">$79.99</div>
+            <img src="https://dyr69yan0mo6n.cloudfront.net/prod/3722774/2025/11/1762992906522.jpg" class="gift-image"
+                alt="Oxo Pop Set">
+            <h2 class="gift-name">Oxo Pop 2.0 5-Piece Starter Set</h2>
+            <p class="gift-description">Quelques contenants oxo (plus des grands que des petits), spécifiquement la
+                marque oxo :) *ils en ont au bulkbarn près de chez pilu</p>
+        </a>
+
+        <a href="https://www.amazon.ca/-/fr/dp/B0F28P4LTL/?coliid=I1KLAGN712JQ5I&colid=3JUEHPBWF68E7&psc=1&ref_=list_c_wl_gv_dp_ii&th=1&tag=giftfulca-20&linkCode=ogi"
+            class="gift-card">
+            <div class="price-tag">$27.99</div>
+            <img src="https://dyr69yan0mo6n.cloudfront.net/prod/3722774/2025/11/1762990426851.jpg" class="gift-image"
+                alt="Tea Organizer">
+            <h2 class="gift-name">Acacia Wood Tea Bag Organizer</h2>
+            <p class="gift-description">Peut être un autre, mais mince svp</p>
+        </a>
+
+        <a href="https://www.amazon.ca/-/fr/dp/B07RT4SDFS/?coliid=I1YGJN7SO7E6EA&colid=3JUEHPBWF68E7&psc=1&ref_=list_c_wl_ys_dp_ii&tag=giftfulca-20&linkCode=ogi&th=1"
+            class="gift-card">
+            <div class="price-tag">$17.59</div>
+            <img src="https://dyr69yan0mo6n.cloudfront.net/prod/3722774/2025/11/1762990008425.jpg" class="gift-image"
+                alt="Coffee Dripper">
+            <h2 class="gift-name">DOWAN Pour Over Coffee Dripper</h2>
+            <p class="gift-description">Pour faire du bon café</p>
+        </a>
+
+        <a href="https://lewalkin.online" class="gift-card">
+            <div class="price-tag">? $</div>
+            <img src="https://dyr69yan0mo6n.cloudfront.net/prod/3722774/2025/11/1762990855287.png" class="gift-image"
+                alt="Mitaines">
+            <h2 class="gift-name">Mitaines</h2>
+            <p class="gift-description">Les jaunes, au magasin Walkin que j’aime (Antoine sait)</p>
+        </a>
+
+        <a href="https://librairiebertrand.com/item/8-Sklp_Xq1SUE1we2EbUYQ" class="gift-card">
+            <div class="price-tag">$24.95</div>
+            <img src="https://dyr69yan0mo6n.cloudfront.net/prod/3722774/2025/11/1762989889862.jpg" class="gift-image"
+                alt="Livre">
+            <h2 class="gift-name">Chien NE Meurt Pas a La Fin</h2>
+            <p class="gift-description">Livre de Joel Martel</p>
+        </a>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            // Hide all containers
+            const containers = document.querySelectorAll('.gift-container');
+            containers.forEach(container => container.classList.remove('active'));
+
+            // Deactivate all buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Show selected container and activate button
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
+
 </html>
