@@ -11,16 +11,12 @@
     ],
     "redirects": [
       {
-        "source": "/",
-        "destination": "/cv",
+        "source": "/cv",
+        "destination": "/",
         "type": 301
       }
     ],
     "rewrites": [
-      {
-        "source": "/cv",
-        "destination": "/cv.html"
-      },
       {
         "source": "/noel",
         "destination": "/noel.html"
