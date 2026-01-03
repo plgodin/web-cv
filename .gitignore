@@ -68,5 +68,7 @@ node_modules/
 # Firebase
 .firebase
 public/logprob
+public/kuramoto-fireflies
+public/slime-network
 
 .DS_Store

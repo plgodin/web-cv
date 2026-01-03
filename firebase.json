@@ -2,7 +2,9 @@
   "hosting": {
     "public": "public",
     "predeploy": [
-      "cd logprob && npm install && npm run build"
+      "cd logprob && npm install && npm run build",
+      "cd ../sim/rhythm-swarm && npm install && npm run build && rm -rf ../../web-cv/public/kuramoto-fireflies && cp -r dist ../../web-cv/public/kuramoto-fireflies",
+      "rm -rf public/slime-network && mkdir -p public/slime-network && cp -r ../sim/slime-network/* public/slime-network/"
     ],
     "ignore": [
       "firebase.json",

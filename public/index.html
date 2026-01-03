@@ -27,7 +27,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Manrope:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
       --deep-black: #0a0e14;
@@ -281,81 +281,326 @@
       color: var(--cyan-glow);
     }
 
-    /* Projects */
-    .project-card {
-      background: rgba(13, 21, 32, 0.6);
-      border: 1px solid rgba(255, 0, 110, 0.15);
-      padding: 3rem;
-      border-radius: 12px;
+
+    /* The Lab Section */
+    #lab {
+      min-height: 100vh;
+      padding: 8rem 0;
+    }
+
+    .lab-intro {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+
+    .exhibition-hall {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 3rem;
+      min-height: 500px;
+      max-height: 70vh;
+    }
+
+    /* Specimen Catalog - Left Panel */
+    .specimen-catalog {
+      position: relative;
+      background: rgba(5, 10, 15, 0.8);
+      border: 1px solid rgba(0, 244, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .catalog-entries {
+      height: 100%;
+      max-height: 500px;
+      overflow-y: auto;
+      padding: 1rem 0;
+      scrollbar-width: thin;
+      scrollbar-color: var(--cyan-glow) transparent;
+    }
+
+    .catalog-entries::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .catalog-entries::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .catalog-entries::-webkit-scrollbar-thumb {
+      background: rgba(0, 244, 255, 0.3);
+      border-radius: 2px;
+    }
+
+    .catalog-entry {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      position: relative;
+      font-family: 'Courier New', monospace;
+    }
+
+    .catalog-entry::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--cyan-glow);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .catalog-entry:hover {
+      background: rgba(0, 244, 255, 0.05);
+    }
+
+    .catalog-entry:hover::before,
+    .catalog-entry.active::before {
+      opacity: 1;
+    }
+
+    .catalog-entry.active {
+      background: rgba(0, 244, 255, 0.08);
+    }
+
+    .entry-num {
+      color: var(--cyan-glow);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      margin-right: 1rem;
+      opacity: 0.7;
+    }
+
+    .entry-name {
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .catalog-entry.active .entry-name {
+      color: var(--cyan-glow);
+    }
+
+    .catalog-fade {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: linear-gradient(transparent, rgba(5, 10, 15, 0.9));
+      pointer-events: none;
+    }
+
+    /* Exhibition Plaque - Right Panel */
+    .exhibition-plaque {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      padding: 2rem;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--cyan-glow) transparent;
+      background: rgba(5, 10, 15, 0.8);
+      border: 1px solid rgba(0, 244, 255, 0.1);
+      border-radius: 4px;
       backdrop-filter: blur(10px);
+    }
+
+    .exhibition-plaque::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .exhibition-plaque::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .exhibition-plaque::-webkit-scrollbar-thumb {
+      background: rgba(0, 244, 255, 0.3);
+      border-radius: 2px;
+    }
+
+    .plaque-content {
+      display: none;
+      opacity: 0;
+      width: 100%;
+    }
+
+    .plaque-content.active {
+      display: block;
+      animation: plaqueReveal 0.4s ease forwards;
+    }
+
+    @keyframes plaqueReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .plaque-header {
+      display: flex;
+      align-items: baseline;
+      gap: 2rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .plaque-number {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.15em;
+    }
+
+    .plaque-year {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+
+    .plaque-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    .plaque-medium {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--text-secondary);
       margin-bottom: 2rem;
-      transition: all 0.4s ease;
+      letter-spacing: 0.05em;
+    }
+
+    .plaque-description {
+      max-width: 520px;
+    }
+
+    .plaque-description p {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    .plaque-note {
+      font-style: italic;
+      font-size: 1rem !important;
+      opacity: 0.7;
+      padding-left: 1rem;
+      border-left: 2px solid rgba(0, 244, 255, 0.3);
+    }
+
+    .plaque-warning {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.9rem;
+      color: #f1c40f;
+      background: rgba(241, 196, 15, 0.1);
+      border: 1px solid rgba(241, 196, 15, 0.3);
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .plaque-warning strong {
+      font-weight: 600;
+    }
+
+    .plaque-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      align-items: center;
+    }
+
+    .plaque-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 2rem;
+      color: var(--cyan-glow);
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      border: 1px solid var(--cyan-glow);
+      border-radius: 2px;
+      background: rgba(0, 244, 255, 0.05);
       position: relative;
       overflow: hidden;
     }
 
-    .project-card::after {
+    .plaque-link::before {
       content: '';
       position: absolute;
-      top: -50%;
-      right: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 0, 110, 0.1) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 244, 255, 0.1);
+      transition: left 0.4s ease;
+      z-index: -1;
     }
 
-    .project-card:hover {
-      border-color: var(--magenta-accent);
-      transform: translateX(10px);
-      box-shadow: 0 10px 50px rgba(255, 0, 110, 0.3);
+    .plaque-link:hover {
+      background: rgba(0, 244, 255, 0.15);
+      box-shadow: 0 0 20px rgba(0, 244, 255, 0.3);
+      transform: translateY(-2px);
     }
 
-    .project-card:hover::after {
-      opacity: 1;
+    .plaque-link:hover::before {
+      left: 100%;
     }
 
-    .project-card h3 {
-      font-family: 'Righteous', cursive;
-      font-size: 2rem;
-      color: var(--magenta-accent);
-      margin-bottom: 1rem;
-      position: relative;
-      z-index: 1;
+    .plaque-arrow {
+      transition: transform 0.3s ease;
+      font-size: 1.2rem;
     }
 
-    .project-card p {
+    .plaque-link:hover .plaque-arrow {
+      transform: translateX(5px);
+    }
+
+    .plaque-link-secondary {
       color: var(--text-secondary);
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 1.5rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .project-links a {
-      color: var(--cyan-glow);
       text-decoration: none;
-      font-weight: 500;
-      padding: 0.5rem 1.5rem;
-      border: 1px solid var(--cyan-glow);
-      border-radius: 4px;
-      transition: all 0.3s ease;
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid transparent;
     }
 
-    .project-links a:hover {
-      background: var(--cyan-glow);
-      color: var(--deep-black);
-      box-shadow: 0 0 20px rgba(0, 244, 255, 0.5);
+    .plaque-link-secondary:hover {
+      color: var(--cyan-glow);
+      border-bottom-color: var(--cyan-glow);
     }
 
     /* Contact */
@@ -420,6 +665,35 @@
     .contact-item p {
       color: var(--text-secondary);
       font-size: 1rem;
+    }
+
+    a.contact-item {
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+    }
+
+    a.contact-item span {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    a.contact-item:hover span {
+      color: var(--cyan-glow);
+    }
+
+    /* Scrambled Email */
+    .scrambled-text {
+      font-family: 'Courier New', Consolas, monospace;
+      letter-spacing: 0.05em;
+      font-size: 0.95rem;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+
+    .scrambled-text.revealed {
+      opacity: 1;
     }
 
     /* Highlight Section */
@@ -530,6 +804,27 @@
       .contact-grid {
         grid-template-columns: 1fr;
       }
+
+      .exhibition-hall {
+        grid-template-columns: 1fr;
+        max-height: none;
+      }
+
+      .specimen-catalog {
+        max-height: 300px;
+      }
+
+      .catalog-entries {
+        max-height: 300px;
+      }
+
+      .plaque-title {
+        font-size: 2rem;
+      }
+
+      .plaque-description {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
@@ -547,7 +842,7 @@
       </p>
       <div class="nav-links">
         <a href="#bio" class="nav-link">Experience</a>
-        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#lab" class="nav-link">The Lab</a>
         <a href="#contact" class="nav-link">Contact</a>
       </div>
       <div class="scroll-indicator"></div>
@@ -609,20 +904,203 @@
       </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-      <h2>Projects</h2>
+    <!-- The Lab Section -->
+    <section id="lab">
+      <h2>The Lab</h2>
+      <p class="lab-intro">A collection of experiments, toys, and digital curiosities.</p>
 
-      <div class="project-card">
-        <h3>QR Transfer</h3>
-        <p>
-          A simple web app for sending text strings between devices using QR codes,
-          <em>even if neither device has a camera</em>. Enables seamless data transfer
-          through an elegant bidirectional QR code system.
-        </p>
-        <div class="project-links">
-          <a href="https://qr-transfer.web.app/" target="_blank">Live Demo</a>
-          <a href="https://github.com/plgodin/qr-transfer" target="_blank">View Code</a>
+      <div class="exhibition-hall">
+        <!-- Catalog List -->
+        <div class="specimen-catalog">
+          <div class="catalog-entries">
+            <button class="catalog-entry active" data-entry="0001">
+              <span class="entry-num">0001</span>
+              <span class="entry-name">QR_TRANSFER</span>
+            </button>
+            <button class="catalog-entry" data-entry="0002">
+              <span class="entry-num">0002</span>
+              <span class="entry-name">LOGPROB_VIEWER</span>
+            </button>
+            <button class="catalog-entry" data-entry="0003">
+              <span class="entry-num">0003</span>
+              <span class="entry-name">WEB_NOVEL</span>
+            </button>
+            <button class="catalog-entry" data-entry="0004">
+              <span class="entry-num">0004</span>
+              <span class="entry-name">DINOSAUR</span>
+            </button>
+            <button class="catalog-entry" data-entry="0005">
+              <span class="entry-num">0005</span>
+              <span class="entry-name">MAILSTRIDE</span>
+            </button>
+            <button class="catalog-entry" data-entry="0006">
+              <span class="entry-num">0006</span>
+              <span class="entry-name">KURAMOTO_FIREFLIES</span>
+            </button>
+            <button class="catalog-entry" data-entry="0007">
+              <span class="entry-num">0007</span>
+              <span class="entry-name">SLIME_NETWORK</span>
+            </button>
+          </div>
+          <div class="catalog-fade"></div>
+        </div>
+
+        <!-- Exhibition Plaques -->
+        <div class="exhibition-plaque">
+          <!-- Entry 0001 - QR Transfer -->
+          <article class="plaque-content active" data-entry="0001">
+            <div class="plaque-header">
+              <span class="plaque-number">№ 0001</span>
+              <span class="plaque-year">2023</span>
+            </div>
+            <h3 class="plaque-title">QR Transfer</h3>
+            <p class="plaque-medium">TypeScript • React • QR Code Generation</p>
+            <div class="plaque-description">
+              <p>A quiet subversion of assumptions. Most QR-based transfer tools assume one device has a camera. This piece enables text transfer between two devices — even when neither can see.</p>
+              <p class="plaque-note">An exercise in bidirectional communication through an inherently unidirectional medium.</p>
+            </div>
+            <div class="plaque-links">
+              <a href="https://qr-transfer.web.app/" target="_blank" class="plaque-link">
+                <span>View Piece</span>
+                <span class="plaque-arrow">→</span>
+              </a>
+              <a href="https://github.com/plgodin/qr-transfer" target="_blank" class="plaque-link-secondary">
+                <span>Source</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Entry 0002 - Logprob Viewer -->
+          <article class="plaque-content" data-entry="0002">
+            <div class="plaque-header">
+              <span class="plaque-number">№ 0002</span>
+              <span class="plaque-year">2024</span>
+            </div>
+            <h3 class="plaque-title">Logprob Viewer</h3>
+            <p class="plaque-medium">TypeScript • React • LLM APIs</p>
+            <div class="plaque-description">
+              <p>A window into the probabilistic mind. This tool visualizes the token-by-token confidence of large language models, revealing the hidden uncertainty beneath fluent prose.</p>
+              <p class="plaque-note">Inspired by the question: "How sure is the machine of what it's saying?"</p>
+            </div>
+            <div class="plaque-warning">
+              <strong>⚠ Note:</strong> Requires your own OpenAI API key to use.
+            </div>
+            <div class="plaque-links">
+              <a href="/logprob" class="plaque-link">
+                <span>View Piece</span>
+                <span class="plaque-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Entry 0003 - Web Novel -->
+          <article class="plaque-content" data-entry="0003">
+            <div class="plaque-header">
+              <span class="plaque-number">№ 0003</span>
+              <span class="plaque-year">2025</span>
+            </div>
+            <h3 class="plaque-title">Web Novel</h3>
+            <p class="plaque-medium">Interactive Fiction • Web Platform</p>
+            <div class="plaque-description">
+              <p>An investigation into the boundaries between reading and experiencing. This platform explores how narrative unfolds in digital space, where the interface becomes part of the story.</p>
+              <p class="plaque-note">The medium shapes the message; the screen reshapes the page.</p>
+            </div>
+            <div class="plaque-links">
+              <a href="https://p5n-web-novel.web.app/" target="_blank" class="plaque-link">
+                <span>View Piece</span>
+                <span class="plaque-arrow">→</span>
+              </a>
+              <a href="https://github.com/plgodin/web-novel" target="_blank" class="plaque-link-secondary">
+                <span>Source</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Entry 0004 - Dinosaur -->
+          <article class="plaque-content" data-entry="0004">
+            <div class="plaque-header">
+              <span class="plaque-number">№ 0004</span>
+              <span class="plaque-year">2025</span>
+            </div>
+            <h3 class="plaque-title">Le Dino à Lau</h3>
+            <p class="plaque-medium">React • TypeScript • Firebase • OpenAI</p>
+            <div class="plaque-description">
+              <p>A meditation on digital companionship and persistent connection. An AI-powered virtual dinosaur that lives its own life, generates unique activities, and evolves through interaction — no penalties, only joy.</p>
+              <p class="plaque-note">Created as a birthday gift. A study in designing relationships without obligation.</p>
+            </div>
+            <div class="plaque-links">
+              <a href="https://p5n-dinosaur.web.app/" target="_blank" class="plaque-link">
+                <span>View Piece</span>
+                <span class="plaque-arrow">→</span>
+              </a>
+              <a href="https://github.com/plgodin/dinosaur" target="_blank" class="plaque-link-secondary">
+                <span>Source</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Entry 0005 - Mailstride -->
+          <article class="plaque-content" data-entry="0005">
+            <div class="plaque-header">
+              <span class="plaque-number">№ 0005</span>
+              <span class="plaque-year">2025</span>
+            </div>
+            <h3 class="plaque-title">Mailstride</h3>
+            <p class="plaque-medium">Web Application • Voice Interface • Email API</p>
+            <div class="plaque-description">
+              <p>Inbox management liberated from the screen. A voice-controlled email triage system designed for motion — sort, archive, and respond to messages while walking, hands-free and eyes-up.</p>
+              <p class="plaque-note">An exploration of ambient productivity: what happens when we untether focus from stillness?</p>
+            </div>
+            <div class="plaque-warning">
+              <strong>⚠ Access Required:</strong> Contact me to whitelist your Google account for access.
+            </div>
+            <div class="plaque-links">
+              <a href="https://p5n-mailstride.web.app/" target="_blank" class="plaque-link">
+                <span>View Piece</span>
+                <span class="plaque-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Entry 0006 - Kuramoto Fireflies -->
+          <article class="plaque-content" data-entry="0006">
+            <div class="plaque-header">
+              <span class="plaque-number">№ 0006</span>
+              <span class="plaque-year">2026</span>
+            </div>
+            <h3 class="plaque-title">Kuramoto Fireflies</h3>
+            <p class="plaque-medium">React • Canvas Simulation • Emergence Theory</p>
+            <div class="plaque-description">
+              <p>A study in spontaneous order. Individual agents pulse at their own rhythms, each slightly different, yet through simple local interactions they self-organize into mesmerizing waves of synchronization — no conductor, no plan, only influence.</p>
+              <p class="plaque-note">Based on the Kuramoto model: how fireflies find their collective rhythm in the dark. Watch chaos discover its own coherence.</p>
+            </div>
+            <div class="plaque-links">
+              <a href="/kuramoto-fireflies" class="plaque-link">
+                <span>View Piece</span>
+                <span class="plaque-arrow">→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Entry 0007 - Slime Network -->
+          <article class="plaque-content" data-entry="0007">
+            <div class="plaque-header">
+              <span class="plaque-number">№ 0007</span>
+              <span class="plaque-year">2026</span>
+            </div>
+            <h3 class="plaque-title">Slime Network</h3>
+            <p class="plaque-medium">Vanilla JS • Pheromone Simulation • Swarm Intelligence</p>
+            <div class="plaque-description">
+              <p>Intelligence without memory, infrastructure without architects. Simple organisms leave chemical traces as they wander. Those traces fade, diffuse, attract. From nothing but evaporation and gradient-following, optimal networks emerge — highways to resources, bridges across voids.</p>
+              <p class="plaque-note">Inspired by Physarum polycephalum, the slime mold that independently rediscovered Tokyo's rail system. Efficiency as an emergent property of forgetting.</p>
+            </div>
+            <div class="plaque-links">
+              <a href="/slime-network" class="plaque-link">
+                <span>View Piece</span>
+                <span class="plaque-arrow">→</span>
+              </a>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -632,20 +1110,20 @@
       <h2>Contact</h2>
 
       <div class="contact-grid">
-        <div class="contact-item">
+        <a href="https://www.linkedin.com/in/plgodin" target="_blank" class="contact-item">
           <h3>LinkedIn</h3>
-          <a href="https://www.linkedin.com/in/plgodin" target="_blank">linkedin.com/in/plgodin</a>
-        </div>
+          <span>linkedin.com/in/plgodin</span>
+        </a>
 
-        <div class="contact-item">
+        <a href="https://github.com/plgodin" target="_blank" class="contact-item">
           <h3>GitHub</h3>
-          <a href="https://github.com/plgodin" target="_blank">github.com/plgodin</a>
-        </div>
+          <span>github.com/plgodin</span>
+        </a>
 
-        <div class="contact-item">
+        <a href="#" class="contact-item" id="email-contact">
           <h3>Email</h3>
-          <p>This domain name at Gmail</p>
-        </div>
+          <span id="scrambled-email" class="scrambled-text"></span>
+        </a>
       </div>
     </section>
   </div>
@@ -874,6 +1352,259 @@
         hero.classList.add('animate-in');
       }
     });
+
+    // Exhibition catalog interaction
+    document.querySelectorAll('.catalog-entry').forEach(entry => {
+      entry.addEventListener('click', () => {
+        const entryId = entry.dataset.entry;
+
+        // Update active catalog entry
+        document.querySelectorAll('.catalog-entry').forEach(e => e.classList.remove('active'));
+        entry.classList.add('active');
+
+        // Update active plaque
+        document.querySelectorAll('.plaque-content').forEach(p => p.classList.remove('active'));
+        const plaque = document.querySelector(`.plaque-content[data-entry="${entryId}"]`);
+        if (plaque) {
+          plaque.classList.add('active');
+        }
+      });
+    });
+
+    // Email scrambler - obfuscated to prevent crawler scraping
+    (function() {
+      // Character codes with offset (not the literal email string)
+      const _d = [119,115,110,118,107,112,117,71,110,116,104,112,115,53,106,118,116];
+      const _k = 7;
+
+      function decode() {
+        return _d.map(c => String.fromCharCode(c - _k)).join('');
+      }
+
+      const glyphSet = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
+      function randomGlyph() {
+        return glyphSet[Math.floor(Math.random() * glyphSet.length)];
+      }
+
+      class EmailScrambler {
+        constructor(element, contactLink) {
+          this.element = element;
+          this.contactLink = contactLink;
+          this.target = decode();
+          this.current = new Array(this.target.length).fill('');
+          this.resolved = new Array(this.target.length).fill(false);
+          this.transitionAnimationId = null;
+          this.idleAnimationId = null;
+          this.isRevealed = false;
+
+          // Fixed positions for @ and . to maintain email-like appearance
+          this.atPos = this.target.indexOf('@');
+          this.dotPos = this.target.lastIndexOf('.');
+
+          this.startIdleAnimation();
+          this.bindEvents();
+        }
+
+        startIdleAnimation() {
+          // Continuously animate scrambled characters
+          const idleAnimate = () => {
+            for (let i = 0; i < this.current.length; i++) {
+              if (!this.resolved[i]) {
+                // Keep @ and . in their positions for email-like appearance
+                if (i === this.atPos) {
+                  this.current[i] = '@';
+                } else if (i === this.dotPos) {
+                  this.current[i] = '.';
+                } else {
+                  this.current[i] = randomGlyph();
+                }
+              }
+            }
+            this.element.textContent = this.current.join('');
+            this.idleAnimationId = setTimeout(() => requestAnimationFrame(idleAnimate), 50);
+          };
+
+          idleAnimate();
+        }
+
+        stopIdleAnimation() {
+          if (this.idleAnimationId) {
+            clearTimeout(this.idleAnimationId);
+            this.idleAnimationId = null;
+          }
+        }
+
+        bindEvents() {
+          // Desktop hover
+          this.contactLink.addEventListener('mouseenter', () => this.reveal());
+          this.contactLink.addEventListener('mouseleave', () => this.scramble());
+
+          // Mobile touch - toggle on tap
+          this.contactLink.addEventListener('touchstart', (e) => {
+            if (this.isRevealed) {
+              // If already revealed, allow the click to proceed (mailto)
+              return;
+            }
+            e.preventDefault();
+            this.reveal();
+          });
+
+          // Click handler for mailto
+          this.contactLink.addEventListener('click', (e) => {
+            if (this.isRevealed) {
+              e.preventDefault();
+              window.location.href = 'mailto:' + this.target;
+            }
+          });
+
+          // Scramble when touching elsewhere on mobile
+          document.addEventListener('touchstart', (e) => {
+            if (!this.contactLink.contains(e.target) && this.isRevealed) {
+              this.scramble();
+            }
+          });
+        }
+
+        reveal() {
+          if (this.transitionAnimationId) cancelAnimationFrame(this.transitionAnimationId);
+          this.stopIdleAnimation();
+
+          const duration = 300;
+          const unresolvedIndices = [];
+          for (let i = 0; i < this.resolved.length; i++) {
+            if (!this.resolved[i]) unresolvedIndices.push(i);
+          }
+
+          if (unresolvedIndices.length === 0) {
+            this.isRevealed = true;
+            return;
+          }
+
+          this.shuffle(unresolvedIndices);
+
+          const startTime = performance.now();
+          const totalChars = unresolvedIndices.length;
+          let lastRevealedCount = 0;
+
+          const animate = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const charsToReveal = Math.floor(progress * totalChars);
+
+            // Reveal new characters
+            for (let i = lastRevealedCount; i < charsToReveal; i++) {
+              const idx = unresolvedIndices[i];
+              this.resolved[idx] = true;
+              this.current[idx] = this.target[idx];
+            }
+            lastRevealedCount = charsToReveal;
+
+            // Keep unresolved chars scrambling during transition
+            for (let i = 0; i < this.current.length; i++) {
+              if (!this.resolved[i]) {
+                if (i === this.atPos) {
+                  this.current[i] = '@';
+                } else if (i === this.dotPos) {
+                  this.current[i] = '.';
+                } else {
+                  this.current[i] = randomGlyph();
+                }
+              }
+            }
+
+            // Update display
+            this.element.textContent = this.current.join('');
+
+if (progress < 1) {
+              this.transitionAnimationId = requestAnimationFrame(animate);
+            } else {
+              this.isRevealed = true;
+              this.transitionAnimationId = null;
+            }
+          };
+
+          this.element.classList.add('revealed');
+          this.transitionAnimationId = requestAnimationFrame(animate);
+        }
+
+        scramble() {
+          this.element.classList.remove('revealed');
+          if (this.transitionAnimationId) cancelAnimationFrame(this.transitionAnimationId);
+
+          const duration = 300;
+          const resolvedIndices = [];
+          for (let i = 0; i < this.resolved.length; i++) {
+            if (this.resolved[i]) resolvedIndices.push(i);
+          }
+
+          if (resolvedIndices.length === 0) {
+            this.isRevealed = false;
+            this.startIdleAnimation();
+            return;
+          }
+
+          this.shuffle(resolvedIndices);
+
+          const startTime = performance.now();
+          const totalChars = resolvedIndices.length;
+          let lastScrambledCount = 0;
+
+          const animate = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const charsToScramble = Math.floor(progress * totalChars);
+
+            // Scramble new characters
+            for (let i = lastScrambledCount; i < charsToScramble; i++) {
+              const idx = resolvedIndices[i];
+              this.resolved[idx] = false;
+            }
+            lastScrambledCount = charsToScramble;
+
+            // Update all unresolved characters with random glyphs
+            for (let i = 0; i < this.current.length; i++) {
+              if (!this.resolved[i]) {
+                if (i === this.atPos) {
+                  this.current[i] = '@';
+                } else if (i === this.dotPos) {
+                  this.current[i] = '.';
+                } else {
+                  this.current[i] = randomGlyph();
+                }
+              }
+            }
+
+            // Update display
+            this.element.textContent = this.current.join('');
+
+            if (progress < 1) {
+              this.transitionAnimationId = requestAnimationFrame(animate);
+            } else {
+              this.isRevealed = false;
+              this.transitionAnimationId = null;
+              this.startIdleAnimation();
+            }
+          };
+
+          this.transitionAnimationId = requestAnimationFrame(animate);
+        }
+
+        shuffle(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+        }
+      }
+
+      // Initialize
+      const emailElement = document.getElementById('scrambled-email');
+      const contactLink = document.getElementById('email-contact');
+      if (emailElement && contactLink) {
+        new EmailScrambler(emailElement, contactLink);
+      }
+    })();
   </script>
 </body>
 </html>
